@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title><ui:insert name="titulo">Arena Match</ui:insert></title>
+
+  <!-- PrimeFlex -->
+  <h:outputStylesheet library="webjars" name="primeflex/primeflex.min.css"/>
+
+  <!-- CSS do app -->
+  <h:outputStylesheet library="css" name="app.css"/>
+
+  <ui:insert name="head"/>
+</h:head>
+
+<h:body styleClass="min-h-screen">
+  <!-- Topbar simples (mobile-friendly) -->
+  <div class="flex align-items-center justify-content-between p-3 border-bottom-1 surface-border">
+    <div class="font-bold text-xl">Arena Match</div>
+    <ui:insert name="topbar-direita"/>
+  </div>
+
+  <!-- Conteúdo -->
+  <div class="p-3">
+    <ui:insert name="conteudo"/>
+  </div>
+
+  <ui:insert name="scripts"/>
+</h:body>
+</html>

@@ -1,0 +1,4 @@
+.w-full { width: 100%; }
+.card-hover { cursor: pointer; }
+.card-hover:hover { filter: brightness(0.98); }
+.w-full { width: 100%; }

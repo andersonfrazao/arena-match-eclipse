@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title><ui:insert name="titulo">Arena Match</ui:insert></title>
+
+    <h:outputStylesheet library="webjars" name="primeflex/primeflex.min.css"/>
+    <h:outputStylesheet library="css" name="app.css"/>
+</h:head>
+
+<h:body>
+
+    <!-- TOPBAR -->
+    <div class="flex align-items-center justify-content-between p-3 border-bottom-1 surface-border">
+
+        <!-- Logo / Nome -->
+        <div class="font-bold text-xl">
+            Arena Match
+        </div>
+
+        <!-- Área direita -->
+        <h:form>
+            <div class="flex align-items-center gap-2">
+
+                <!-- Nome do time -->
+                <span class="text-600 hidden sm:inline">
+                    #{sessaoBean.nomeTime}
+                </span>
+
+                <!-- Botão Sair -->
+                <p:commandButton
+                        value="Sair"
+                        icon="pi pi-sign-out"
+                        actionListener="#{logoutBean.sair}"
+                        styleClass="ui-button-danger ui-button-outlined"
+                        process="@this"/>
+            </div>
+        </h:form>
+    </div>
+
+    <!-- CONTEÚDO -->
+    <div class="p-3">
+        <ui:insert name="conteudo"/>
+    </div>
+
+</h:body>
+</html>

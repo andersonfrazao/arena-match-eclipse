@@ -1,0 +1,42 @@
+<ui:composition template="/WEB-INF/templates/template-publico.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="jakarta.faces.html"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="conteudo">
+        <h:form id="formLogin">
+            <p:messages id="msgs" showDetail="true" closable="true"/>
+
+            <p:panel header="Acessar" styleClass="surface-card shadow-2 border-round p-4">
+                <div class="grid">
+                    <div class="col-12">
+                        <p:outputLabel for="username" value="CPF ou E-mail"/>
+                        <p:inputText id="username" value="#{autenticacaoBean.login}" required="true"
+                                     placeholder="Digite seu CPF ou e-mail" styleClass="w-full"/>
+                    </div>
+
+                    <div class="col-12">
+                        <p:outputLabel for="password" value="Senha"/>
+                        <p:password id="password" value="#{autenticacaoBean.senha}" required="true"
+                                    feedback="false" placeholder="Digite sua senha" styleClass="w-full"/>
+                    </div>
+
+                    <div class="col-12 mt-2">
+                        <p:commandButton value="Acessar" icon="pi pi-sign-in"
+                                         action="#{autenticacaoBean.autenticar}"
+                                         process="@form"
+                                         update="msgs"
+                                         ajax="false"
+                                         styleClass="w-full"/>
+                    </div>
+
+                    <div class="col-12 text-center mt-3">
+                        <span class="text-600">Ainda não é cadastrado?</span>
+                        <p:button value="Cadastre-se" outcome="/cadastro.xhtml" styleClass="ui-button-link"/>
+                    </div>
+                </div>
+            </p:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>

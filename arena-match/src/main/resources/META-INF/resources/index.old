@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="jakarta.faces.core">
+
+<h:head>
+    <title>Boas-vindas JoinFaces</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <h:outputStylesheet library="webjars" name="primeflex/3.3.1/primeflex.min.css" />
+</h:head>
+
+<h:body>
+    <h:form>
+        <div class="flex align-items-center justify-content-center min-h-screen p-3">
+
+            <p:panel header="Minha Primeira Página Spring + JSF"
+                     styleClass="w-full md:w-8 lg:w-4 shadow-4">
+
+                <div class="grid p-fluid"> <div class="col-12 mb-2">
+                    <h:outputText value="Olá! O JoinFaces configurou tudo para você."
+                                  styleClass="text-lg font-bold block mb-2" />
+                </div>
+
+                    <div class="col-12">
+                        <span class="ui-float-label">
+                            <p:inputText id="nome" value="#{welcomeBean.nome}" styleClass="w-full" />
+                            <p:outputLabel for="nome" value="Digite seu nome..." />
+                        </span>
+                    </div>
+
+                    <div class="col-12 mt-3">
+                        <p:commandButton value="Enviar para o Spring"
+                                         action="#{welcomeBean.enviarMensagem}"
+                                         update="msg"
+                                         icon="pi pi-send"
+                                         styleClass="ui-button-raised" />
+                    </div>
+
+                    <div class="col-12">
+                        <p:messages id="msg" showDetail="true" closable="true">
+                            <p:autoUpdate />
+                        </p:messages>
+                    </div>
+
+                </div>
+            </p:panel>
+        </div>
+    </h:form>
+</h:body>
+</html>

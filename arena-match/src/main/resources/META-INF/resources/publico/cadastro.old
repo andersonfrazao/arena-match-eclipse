@@ -1,0 +1,218 @@
+<ui:composition template="/WEB-INF/templates/template-publico.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="jakarta.faces.html"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="jakarta.faces.core">
+
+    <ui:define name="conteudo">
+        <h:form id="formCadastro">
+            <p:messages id="msgs" showDetail="true" closable="true"/>
+
+            <p:panel header="Criar cadastro" styleClass="surface-card shadow-2 border-round p-4">
+
+                <p:wizard id="wizCadastro"
+                          widgetVar="wizCadastro"
+                          flowListener="#{cadastroBean.onFlow}"
+                          showNavBar="false"
+                          showStepStatus="true">
+
+                    <!-- 1) Representante -->
+                    <p:tab id="rep" title="Representante">
+                        <div class="grid">
+                            <div class="col-12">
+                                <p:outputLabel for="nomeRep" value="Nome"/>
+                                <p:inputText id="nomeRep" value="#{cadastroBean.nomeRepresentante}" required="true"
+                                             styleClass="w-full"/>
+                            </div>
+
+                            <div class="col-12 md:col-6">
+                                <p:outputLabel for="cpf" value="CPF"/>
+                                <p:inputMask id="cpf" mask="999.999.999-99" value="#{cadastroBean.cpf}" required="true"
+                                             styleClass="w-full"/>
+                            </div>
+
+                            <div class="col-12 md:col-6">
+                                <p:outputLabel for="email" value="E-mail"/>
+                                <p:inputText id="email" value="#{cadastroBean.email}" required="true"
+                                             styleClass="w-full"/>
+                            </div>
+
+                            <div class="col-12">
+                                <p:outputLabel for="senha" value="Senha"/>
+                                <p:password id="senha" value="#{cadastroBean.senha}" required="true" feedback="false"
+                                            styleClass="w-full"/>
+                            </div>
+                        </div>
+                    </p:tab>
+
+                    <!-- 2) Time + Endereço -->
+                    <p:tab id="time" title="Time">
+                        <div class="grid">
+                            <div class="col-12">
+                                <p:outputLabel for="nomeTime" value="Nome do time"/>
+                                <p:inputText id="nomeTime" value="#{cadastroBean.nomeTime}" required="true"
+                                             styleClass="w-full"/>
+                            </div>
+
+                            <div class="col-12 md:col-4">
+                                <p:outputLabel for="cep" value="CEP"/>
+                                <p:inputMask id="cep" mask="99999-999" value="#{cadastroBean.cep}" required="true"
+                                             styleClass="w-full"/>
+                            </div>
+
+                            <div class="col-12 md:col-4 flex align-items-end">
+                                <p:commandButton value="Buscar CEP" icon="pi pi-search"
+                                                 actionListener="#{cadastroBean.buscarCep}"
+                                                 process="@this"
+                                                 update="msgs endereco"
+                                                 styleClass="w-full"/>
+                            </div>
+
+                            <!-- IMPORTANTE: agora é componente JSF -->
+                            <p:outputPanel id="endereco" styleClass="col-12" layout="block">
+                                <div class="grid">
+                                    <div class="col-12 md:col-6">
+                                        <p:outputLabel value="Logradouro"/>
+                                        <p:inputText value="#{cadastroBean.logradouro}" readonly="true" styleClass="w-full"/>
+                                    </div>
+                                    <div class="col-12 md:col-6">
+                                        <p:outputLabel value="Bairro"/>
+                                        <p:inputText value="#{cadastroBean.bairro}" readonly="true" styleClass="w-full"/>
+                                    </div>
+                                    <div class="col-12 md:col-6">
+                                        <p:outputLabel value="Cidade"/>
+                                        <p:inputText value="#{cadastroBean.cidade}" readonly="true" styleClass="w-full"/>
+                                    </div>
+                                    <div class="col-6 md:col-3">
+                                        <p:outputLabel value="UF"/>
+                                        <p:inputText value="#{cadastroBean.uf}" readonly="true" maxlength="2" styleClass="w-full"/>
+                                    </div>
+                                    <div class="col-6 md:col-3">
+                                        <p:outputLabel value="Região"/>
+                                        <p:inputText value="#{cadastroBean.regiao}" styleClass="w-full"
+                                                     placeholder="Ex.: Zona Norte"/>
+                                    </div>
+                                </div>
+                            </p:outputPanel>
+
+                            <div class="col-12 md:col-6">
+                                <p:selectBooleanCheckbox value="#{cadastroBean.temCasa}"
+                                                         itemLabel="Meu time tem casa (pode ser mandante)"/>
+                            </div>
+                            <div class="col-12 md:col-6">
+                                <p:selectBooleanCheckbox value="#{cadastroBean.somenteFora}"
+                                                         itemLabel="Meu time só joga fora"/>
+                            </div>
+                        </div>
+                    </p:tab>
+
+                    <!-- 3) Categorias -->
+                    <p:tab id="cat" title="Categorias">
+                        <div class="grid">
+                            <div class="col-12">
+                                <p:outputLabel value="Selecione até 3 categorias"/>
+                                <p:selectCheckboxMenu value="#{cadastroBean.categoriasSelecionadas}"
+                                                      label="Categorias" styleClass="w-full">
+                                    <f:selectItem itemLabel="Esporte" itemValue="ESPORTE"/>
+                                    <f:selectItem itemLabel="Veterano" itemValue="VETERANO"/>
+                                    <f:selectItem itemLabel="Master" itemValue="MASTER"/>
+                                </p:selectCheckboxMenu>
+                                <small class="text-600">Esporte / Veterano / Master</small>
+                            </div>
+                        </div>
+                    </p:tab>
+
+                    <!-- 4) Agenda -->
+                    <p:tab id="agenda" title="Agenda">
+                        <p:panel styleClass="p-2">
+                            <div class="text-600 mb-3">
+                                Cadastre os dias da semana e horários por categoria.
+                            </div>
+
+                            <p:dataTable value="#{cadastroBean.agendas}" var="a" reflow="true">
+                                <p:column headerText="Categoria">
+                                    <p:selectOneMenu value="#{a.categoria}" styleClass="w-full">
+                                        <f:selectItem itemLabel="Esporte" itemValue="ESPORTE"/>
+                                        <f:selectItem itemLabel="Veterano" itemValue="VETERANO"/>
+                                        <f:selectItem itemLabel="Master" itemValue="MASTER"/>
+                                    </p:selectOneMenu>
+                                </p:column>
+
+                                <p:column headerText="Dia">
+                                    <p:selectOneMenu value="#{a.diaSemana}" styleClass="w-full">
+                                        <f:selectItem itemLabel="Seg" itemValue="SEG"/>
+                                        <f:selectItem itemLabel="Ter" itemValue="TER"/>
+                                        <f:selectItem itemLabel="Qua" itemValue="QUA"/>
+                                        <f:selectItem itemLabel="Qui" itemValue="QUI"/>
+                                        <f:selectItem itemLabel="Sex" itemValue="SEX"/>
+                                        <f:selectItem itemLabel="Sáb" itemValue="SAB"/>
+                                        <f:selectItem itemLabel="Dom" itemValue="DOM"/>
+                                    </p:selectOneMenu>
+                                </p:column>
+
+                                <p:column headerText="Início">
+                                    <p:datePicker value="#{a.horaInicio}" timeOnly="true" pattern="HH:mm" styleClass="w-full"/>
+                                </p:column>
+
+                                <p:column headerText="Fim">
+                                    <p:datePicker value="#{a.horaFim}" timeOnly="true" pattern="HH:mm" styleClass="w-full"/>
+                                </p:column>
+
+                                <p:column headerText="Ações" style="width:110px">
+                                    <p:commandButton icon="pi pi-trash"
+                                                     actionListener="#{cadastroBean.removerAgenda(a)}"
+                                                     update="@form" styleClass="ui-button-danger"/>
+                                </p:column>
+                            </p:dataTable>
+
+                            <div class="mt-3">
+                                <p:commandButton value="Adicionar" icon="pi pi-plus"
+                                                 actionListener="#{cadastroBean.adicionarAgenda()}"
+                                                 update="@form"/>
+                            </div>
+                        </p:panel>
+                    </p:tab>
+
+                    <!-- 5) Concluir -->
+                    <p:tab id="fim" title="Concluir">
+                        <div class="grid">
+                            <div class="col-12">
+                                <p:commandButton value="Concluir cadastro"
+                                                 icon="pi pi-check"
+                                                 action="#{cadastroBean.concluirCadastro}"
+                                                 process="@form"
+                                                 update="msgs"
+                                                 ajax="false"
+                                                 styleClass="w-full ui-button-success"/>
+                            </div>
+
+                            <div class="col-12 text-center mt-3">
+                                <span class="text-600">Já tem cadastro?</span>
+                                <p:button value="Voltar para login" outcome="/login.xhtml" styleClass="ui-button-link"/>
+                            </div>
+                        </div>
+                    </p:tab>
+
+                </p:wizard>
+
+                <!-- Barra de navegação custom (evita reset e permite voltar) -->
+                <div class="flex justify-content-between mt-3 gap-2">
+                    <p:commandButton value="Voltar"
+                                     icon="pi pi-arrow-left"
+                                     type="button"
+                                     onclick="PF('wizCadastro').back();"
+                                     styleClass="ui-button-outlined"/>
+
+                    <p:commandButton value="Próximo"
+                                     icon="pi pi-arrow-right"
+                                     iconPos="right"
+                                     type="button"
+                                     onclick="PF('wizCadastro').next();"
+                                     styleClass="ui-button"/>
+                </div>
+
+            </p:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>

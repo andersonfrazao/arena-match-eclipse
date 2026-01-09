@@ -1,0 +1,24 @@
+<ui:composition template="/WEB-INF/templates/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="jakarta.faces.html"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <f:metadata>
+        <f:viewAction action="#{autorizacaoBean.verificarLogado}"/>
+    </f:metadata>
+
+    <ui:define name="conteudo">
+        <div class="flex justify-content-center mt-6">
+            <p:panel styleClass="surface-card shadow-2 border-round p-5 text-center">
+                <h2 class="mb-3">
+                    Bem-vindo,
+                    <span class="text-primary">#{sessaoBean.nomeRepresentante}</span>
+                </h2>
+                <p class="text-600">Autenticação realizada com sucesso.</p>
+            </p:panel>
+        </div>
+    </ui:define>
+
+</ui:composition>

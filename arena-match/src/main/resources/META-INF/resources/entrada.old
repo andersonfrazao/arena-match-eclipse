@@ -1,0 +1,24 @@
+<ui:composition template="/WEB-INF/templates/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="jakarta.faces.html"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="conteudo">
+        <p:panel styleClass="surface-card shadow-1 border-round p-4">
+            <div class="text-center">
+                <div class="text-2xl font-bold mb-2">Bem-vindo!</div>
+                <div class="text-600 mb-4">Entre ou crie seu cadastro para começar.</div>
+            </div>
+
+            <div class="grid">
+                <div class="col-12 md:col-6">
+                    <p:button value="Entrar" outcome="/publico/login.xhtml" styleClass="w-full"/>
+                </div>
+                <div class="col-12 md:col-6">
+                    <p:button value="Criar cadastro" outcome="/publico/cadastro.xhtml" styleClass="w-full ui-button-success"/>
+                </div>
+            </div>
+        </p:panel>
+    </ui:define>
+</ui:composition>

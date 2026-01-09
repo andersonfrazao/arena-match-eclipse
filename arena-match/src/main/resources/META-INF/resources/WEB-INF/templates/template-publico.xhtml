@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets">
+<h:head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title><ui:insert name="titulo">Arena Match</ui:insert></title>
+
+    <h:outputStylesheet library="webjars" name="primeflex/primeflex.min.css"/>
+    <h:outputStylesheet library="css" name="app.css"/>
+</h:head>
+
+<h:body>
+    <!-- Centraliza sempre (sem depender de classe utilitária) -->
+    <div style="min-height: 100vh; display:flex; align-items:center; justify-content:center; padding:16px;">
+        <div style="width:100%; max-width:520px;">
+            <ui:insert name="conteudo"/>
+        </div>
+    </div>
+</h:body>
+</html>
